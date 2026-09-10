@@ -1,0 +1,65 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "src/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "reviews"
+    label: "Reviews"
+    label_singular: "Review"
+    folder: "src/reviews"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Game title", name: "title", widget: "string" }
+      - { label: "Genre", name: "meta", widget: "string", hint: "e.g. Action RPG / Soulslike" }
+      - label: "Cover color"
+        name: "cover_class"
+        widget: "select"
+        options:
+          - { label: "Brown/gold", value: "cover--1" }
+          - { label: "Teal", value: "cover--2" }
+          - { label: "Purple", value: "cover--3" }
+          - { label: "Blue", value: "cover--4" }
+          - { label: "Red", value: "cover--5" }
+      - { label: "Publish date", name: "date", widget: "datetime" }
+      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
+      - label: "Genre tags"
+        name: "genre_tags"
+        widget: "select"
+        multiple: true
+        options: ["action", "rpg", "souls", "open-world", "racing"]
+      - { label: "Pros", name: "pros", widget: "list" }
+      - { label: "Cons", name: "cons", widget: "list" }
+      - { label: "Verdict (recommended or not, no score)", name: "verdict", widget: "text" }
+      - { label: "Closing question", name: "cta", widget: "string", required: false }
+      - { label: "Review body (hook + story)", name: "body", widget: "markdown" }
+
+  - name: "news"
+    label: "News"
+    label_singular: "News item"
+    folder: "src/news"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish date", name: "date", widget: "datetime" }
+      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "articles"
+    label: "Articles"
+    label_singular: "Article"
+    folder: "src/articles"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish date", name: "date", widget: "datetime" }
+      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }: "markdown" }

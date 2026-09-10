@@ -1,0 +1,81 @@
+---
+layout: base.njk
+title: "Moroccan Gaming Culture"
+description: "News and Reviews of latest games."
+permalink: "/index.html"
+---
+{% set allReviews = collections.reviews | reverse %}
+{% set hero = allReviews[0] %}
+{% set allNews = collections.news | reverse %}
+
+<section class="hero">
+  <div class="container">
+    <div class="cover {{ hero.data.cover_class }}">
+      <span class="cover-label">{{ hero.data.title }}</span>
+    </div>
+    <div>
+      <p class="hero-kicker">Special Review</p>
+      <h1>{{ hero.data.title }}</h1>
+      <p class="excerpt">{{ hero.data.excerpt }}</p>
+      <a href="{{ hero.url }}" class="btn">Read the full review</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Latest reviews</h2>
+      <a href="/reviews.html">See more</a>
+    </div>
+    <div class="grid">
+      {% for review in allReviews.slice(1, 4) %}
+      <a class="card" href="{{ review.url }}">
+        <div class="cover {{ review.data.cover_class }}"><span class="cover-label">{{ review.data.title }}</span></div>
+        <h3>{{ review.data.title }}</h3>
+        <p class="meta">{{ review.data.meta }}</p>
+        <p class="excerpt">{{ review.data.excerpt }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Latest news</h2>
+      <a href="/news.html">See more</a>
+    </div>
+    <div class="news-list">
+  {% if allNews.length > 0 %}
+  {% for item in allNews.slice(0, 4) %}
+  <a class="news-row" href="{{ item.url }}">
+    <time>{{ item.data.date | date }}</time>
+    <div>
+      <h3>{{ item.data.title }}</h3>
+      <p>{{ item.data.excerpt }}</p>
+    </div>
+  </a>
+  {% endfor %}
+  {% else %}
+  <p style="color:var(--text-muted);">No news published yet.</p>
+  {% endif %}
+</div>
+  </div>
+</section>
+
+<section class="section" style="border-bottom:none;">
+  <div class="container">
+    <div class="section-head">
+      <h2>Genre browsing</h2>
+    </div>
+    <div class="chips">
+      <span class="chip">Action</span>
+      <span class="chip">RPG</span>
+      <span class="chip">Soulslike</span>
+      <span class="chip">Open World</span>
+      <span class="chip">Racing</span>
+    </div>
+  </div>
+</section>

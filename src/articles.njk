@@ -1,0 +1,30 @@
+---
+layout: base.njk
+title: "Articles"
+permalink: "/articles.html"
+---
+{% set allArticles = collections.articles | reverse %}
+
+<section class="section" style="border-bottom:none; padding-bottom:0;">
+  <div class="container">
+    <h1 style="font-size:2rem;">All articles</h1>
+  </div>
+</section>
+
+<section class="section" style="border-bottom:none;">
+  <div class="container">
+    {% if allArticles.length > 0 %}
+    <div class="grid">
+      {% for item in allArticles %}
+      <a class="card" href="{{ item.url }}">
+        <h3>{{ item.data.title }}</h3>
+        <p class="meta">{{ item.data.date | date }}</p>
+        <p class="excerpt">{{ item.data.excerpt }}</p>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p style="color:var(--text-muted);">No articles published yet — check back soon.</p>
+    {% endif %}
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+layout: base.njk
+---
+<section class="review-head">
+  <div class="container">
+    <div class="meta-row">
+      <span>{{ kind }}</span>
+      <span>·</span>
+      <time>{{ date | date }}</time>
+    </div>
+    <h1>{{ title }}</h1>
+  </div>
+</section>
+
+<section class="section" style="border-bottom:none;">
+  <div class="container">
+    <div class="article-text" style="max-width:68ch; margin:0 auto;">
+      {{ content | safe }}
+      {% if cta %}
+      <div class="cta-question">
+        <p>{{ cta }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

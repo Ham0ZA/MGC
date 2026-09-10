@@ -1,0 +1,32 @@
+---
+layout: base.njk
+title: "News"
+permalink: "/news.html"
+---
+{% set allNews = collections.news | reverse %}
+
+<section class="section" style="border-bottom:none; padding-bottom:0;">
+  <div class="container">
+    <h1 style="font-size:2rem;">All news</h1>
+  </div>
+</section>
+
+<section class="section" style="border-bottom:none;">
+  <div class="container">
+    {% if allNews.length > 0 %}
+    <div class="news-list">
+      {% for item in allNews %}
+      <a class="news-row" href="{{ item.url }}">
+        <time>{{ item.data.date | date }}</time>
+        <div>
+          <h3>{{ item.data.title }}</h3>
+          <p>{{ item.data.excerpt }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p style="color:var(--text-muted);">No news published yet — check back soon.</p>
+    {% endif %}
+  </div>
+</section>

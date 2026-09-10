@@ -1,0 +1,60 @@
+---
+layout: base.njk
+---
+<section class="review-head">
+  <div class="container">
+    <div class="meta-row">
+      <span>Review</span>
+      <span>·</span>
+      <span>{{ meta }}</span>
+      <span>·</span>
+      <time>{{ date | date }}</time>
+    </div>
+    <h1>{{ title }}</h1>
+  </div>
+</section>
+
+<section class="review-body">
+  <div class="container" style="display:grid; grid-template-columns:1fr 280px; gap:56px;">
+
+    <div class="article-text">
+
+      {{ content | safe }}
+
+      {% if pros or cons %}
+      <h2>Pros and Cons</h2>
+      <div class="pros-cons">
+        <div class="box pros">
+          <h4>Positives</h4>
+          <ul>
+            {% for p in pros %}<li>{{ p }}</li>{% endfor %}
+          </ul>
+        </div>
+        <div class="box cons">
+          <h4>Negatives</h4>
+          <ul>
+            {% for c in cons %}<li>{{ c }}</li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if verdict %}
+      <h2>Summary</h2>
+      <p>{{ verdict }}</p>
+      {% endif %}
+
+      {% if cta %}
+      <div class="cta-question">
+        <p>{{ cta }}</p>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <aside class="cover {{ cover_class }}">
+      <span class="cover-label">{{ title }}</span>
+    </aside>
+
+  </div>
+</section>
