@@ -29,11 +29,6 @@ layout: base.njk
 
       {{ content | safe }}
 
-      {% if verdict %}
-      <h2>Summary</h2>
-      <p>{{ verdict }}</p>
-      {% endif %}
-
       {% if pros or cons %}
       <h2>Pros and Cons</h2>
       <div class="pros-cons">
@@ -50,6 +45,11 @@ layout: base.njk
           </ul>
         </div>
       </div>
+      {% endif %}
+
+      {% if verdict %}
+      <h2>Summary</h2>
+      <p>{{ verdict }}</p>
       {% endif %}
 
       {% if cta %}
