@@ -16,30 +16,20 @@ collections:
     identifier_field: "title"
     fields:
       - { label: "Game title", name: "title", widget: "string" }
-      - { label: "Genre", name: "meta", widget: "string", hint: "e.g. Action RPG / Soulslike" }
-      - label: "Cover color"
-        name: "cover_class"
-        widget: "select"
-        options:
-          - { label: "Brown/gold", value: "cover--1" }
-          - { label: "Teal", value: "cover--2" }
-          - { label: "Purple", value: "cover--3" }
-          - { label: "Blue", value: "cover--4" }
-          - { label: "Red", value: "cover--5" }
-      - { label: "Cover image (optional, overrides the color above if set)", name: "cover_image", widget: "image", required: false }
-      - { label: "Publish date", name: "date", widget: "datetime" }
-      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
-      - label: "Genre tags"
-        name: "genre_tags"
+      - label: "Genre"
+        name: "meta"
         widget: "select"
         multiple: true
-        options: ["action", "rpg", "souls", "open-world", "racing"]
+        options: ["Action", "RPG", "Soulslike", "Open-World", "Racing", "Adventure", "Shooter", "Strategy", "Simulation",
+          "Sports", "Puzzle", "Horror", "Platformer", "Fighting", "MMO", "Stealth", "Survival", "Rhythm", "Visual Novel", "Party", "Educational"]
+      - { label: "Cover image", name: "cover_image", widget: "image", required: false }
+      - { label: "Publish date", name: "date", widget: "datetime" }
+      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
+      - { label: "Review body (hook + story)", name: "body", widget: "markdown" }
       - { label: "Pros", name: "pros", widget: "list" }
       - { label: "Cons", name: "cons", widget: "list" }
-      - { label: "Verdict (recommended or not, no score)", name: "verdict", widget: "text" }
-      - { label: "Closing question", name: "cta", widget: "string", required: false }
-      - { label: "Review body (hook + story)", name: "body", widget: "markdown" }
-
+      - { label: "Rating", name: "cta", widget: "string", required: true }
+      
   - name: "news"
     label: "News"
     label_singular: "News item"

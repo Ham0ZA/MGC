@@ -1,6 +1,9 @@
 ---
 title: "The First Berserker: Khazan"
-meta: Role-playing (RPG), Hack and slash
+meta:
+  - Action
+  - Soulslike
+  - RPG
 cover_class: cover--1
 cover_image: /images/uploads/87f22ef7349f8bc783fbaecb30429e4b.png
 date: 2026-09-12T13:54:00.000+01:00
@@ -8,15 +11,15 @@ excerpt: "The First Berserker: Khazan is a hardcore action role-playing game.
   The player will become Khazan, the great general of the Pelos empire, whom
   overcame death, and sets out to reveal the incidents that led to his downfall
   and seek vengeance on his enemies."
+pros:
+  - Good Story
+  - Great Graphics
+cons:
+  - None
+cta: For this title we give it a solid 8.5/10, definitely worth.
 genre_tags:
   - rpg
-pros:
-  - Good story
-  - graphically pleasing
-cons:
-  - none
 verdict: Recommend
-cta: ""
 ---
 Last time I talked about my experience with *Lies of P*, which I described as similar to FromSoftware games. Today, I’m bringing you an unusually light-hearted review of *The First Berserker: Khazan*, released in 2025 by Neople. It’s an ARPG
 centred on the story of General Khazan, who was accused of treason, exiled and tortured, and you try to restore him to his former glory.

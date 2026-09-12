@@ -11,7 +11,11 @@ permalink: "/index.html"
 <section class="hero">
   <div class="container">
     <div class="cover {{ hero.data.cover_class }}">
-      <span class="cover-label">{{ hero.data.title }}</span>
+      {% if hero.data.cover_image %}
+              <img src="{{ hero.data.cover_image }}" alt="{{ hero.data.title }}" class="cover-image">
+              {% else %}
+                <span class="cover-label">{{ hero.data.title }}</span>
+              {% endif %}
     </div>
     <div>
       <p class="hero-kicker">Special Review</p>
