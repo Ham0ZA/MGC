@@ -1,3 +1,4 @@
+local_backend: true
 backend:
   name: git-gateway
   branch: main
@@ -25,6 +26,7 @@ collections:
           - { label: "Purple", value: "cover--3" }
           - { label: "Blue", value: "cover--4" }
           - { label: "Red", value: "cover--5" }
+      - { label: "Cover image (optional, overrides the color above if set)", name: "cover_image", widget: "image", required: false }
       - { label: "Publish date", name: "date", widget: "datetime" }
       - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
       - label: "Genre tags"
@@ -62,4 +64,4 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish date", name: "date", widget: "datetime" }
       - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }: "markdown" }
+      - { label: "Body", name: "body", widget: "markdown" }

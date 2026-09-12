@@ -1,35 +1,64 @@
 ---
 layout: base.njk
-title: "Reviews"
-permalink: "/reviews.html"
 ---
-{% set allReviews = collections.reviews | reverse %}
-
-<section class="section" style="border-bottom:none; padding-bottom:0;">
+<section class="review-head">
   <div class="container">
-    <h1 style="font-size:2rem; margin-bottom:24px;">LAtest reviews</h1>
-    <div class="chips" role="group" aria-label="Filter by genre">
-      <button class="chip" data-genre="all" aria-pressed="true">All</button>
-      <button class="chip" data-genre="action">Action</button>
-      <button class="chip" data-genre="rpg">RPG</button>
-      <button class="chip" data-genre="souls">Soulslike</button>
-      <button class="chip" data-genre="open-world">Open World</button>
-      <button class="chip" data-genre="racing">Racing</button>
+    <div class="meta-row">
+      <span>Review</span>
+      <span>·</span>
+      <span>{{ meta }}</span>
+      <span>·</span>
+      <time>{{ date | date }}</time>
     </div>
+    <h1>{{ title }}</h1>
   </div>
 </section>
 
-<section class="section" style="border-bottom:none;">
-  <div class="container">
-    <div class="grid">
-      {% for review in allReviews %}
-      <a class="card" href="{{ review.url }}" data-genre-tag="{{ review.data.genre_tags | join(' ') }}">
-        <div class="cover {{ review.data.cover_class }}"><span class="cover-label">{{ review.data.title }}</span></div>
-        <h3>{{ review.data.title }}</h3>
-        <p class="meta">{{ review.data.meta }}</p>
-        <p class="excerpt">{{ review.data.excerpt }}</p>
-      </a>
-      {% endfor %}
+<section class="review-body">
+  <div class="container" style="display:grid; grid-template-columns:280px 1fr; gap:56px;">
+
+    <aside class="cover {{ cover_class }}">
+  {% if cover_image %}
+  <img src="{{ cover_image }}" alt="{{ title }}" class="cover-image">
+  {% else %}
+  <span class="cover-label">{{ title }}</span>
+  {% endif %}
+</aside>
+
+    <div class="article-text">
+
+      {{ content | safe }}
+
+      {% if verdict %}
+      <h2>Summary</h2>
+      <p>{{ verdict }}</p>
+      {% endif %}
+
+      {% if pros or cons %}
+      <h2>Pros and Cons</h2>
+      <div class="pros-cons">
+        <div class="box pros">
+          <h4>Positives</h4>
+          <ul>
+            {% for p in pros %}<li>{{ p }}</li>{% endfor %}
+          </ul>
+        </div>
+        <div class="box cons">
+          <h4>Negatives</h4>
+          <ul>
+            {% for c in cons %}<li>{{ c }}</li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if cta %}
+      <div class="cta-question">
+        <p>{{ cta }}</p>
+      </div>
+      {% endif %}
+
     </div>
+
   </div>
 </section>

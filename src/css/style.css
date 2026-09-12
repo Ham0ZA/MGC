@@ -34,6 +34,7 @@ body {
   line-height: 1.85;
   font-size: 17px;
   direction: ltr;
+  overflow-wrap: break-word;
 }
 
 img, svg { max-width: 100%; display: block; }
@@ -161,6 +162,14 @@ p { margin: 0 0 1em 0; color: var(--text); }
   display: flex;
   align-items: flex-end;
   padding: 14px;
+}
+
+.cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cover .cover-label {
@@ -362,9 +371,9 @@ p { margin: 0 0 1em 0; color: var(--text); }
   gap: 56px;
 }
 
-.review-body .cover { position: sticky; top: 100px; height: fit-content; }
+.review-body .cover { position: sticky; top: 100px; aspect-ratio: unset; width: 280px; height: 380px; }
 
-.article-text > * { max-width: 68ch; }
+.article-text > * { max-width: 68ch; overflow-wrap: break-word; word-break: break-word; }
 .article-text h2 { font-size: 1.4rem; margin-top: 1.6em; }
 
 .pros-cons {
