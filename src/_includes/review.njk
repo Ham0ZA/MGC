@@ -15,11 +15,24 @@ layout: base.njk
 </section>
 
 <section class="review-body">
-  <div class="container" style="display:grid; grid-template-columns:1fr 280px; gap:56px;">
+  <div class="container" style="display:grid; grid-template-columns:280px 1fr; gap:56px;">
+
+    <aside class="cover {{ cover_class }}">
+      {% if cover_image %}
+      <img src="{{ cover_image }}" alt="{{ title }}" class="cover-image">
+      {% else %}
+      <span class="cover-label">{{ title }}</span>
+      {% endif %}
+    </aside>
 
     <div class="article-text">
 
       {{ content | safe }}
+
+      {% if verdict %}
+      <h2>Summary</h2>
+      <p>{{ verdict }}</p>
+      {% endif %}
 
       {% if pros or cons %}
       <h2>Pros and Cons</h2>
@@ -39,11 +52,6 @@ layout: base.njk
       </div>
       {% endif %}
 
-      {% if verdict %}
-      <h2>Summary</h2>
-      <p>{{ verdict }}</p>
-      {% endif %}
-
       {% if cta %}
       <div class="cta-question">
         <p>{{ cta }}</p>
@@ -51,10 +59,6 @@ layout: base.njk
       {% endif %}
 
     </div>
-
-    <aside class="cover {{ cover_class }}">
-      <span class="cover-label">{{ title }}</span>
-    </aside>
 
   </div>
 </section>
