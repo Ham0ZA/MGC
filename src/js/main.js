@@ -5,11 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
   var toggle = document.querySelector(".nav-toggle");   // the ☰ button
   var nav = document.querySelector(".main-nav");         // the nav links
   if (toggle && nav) {
-    toggle.addEventListener("click", function () {
-      // .toggle() flips the "open" class on/off each click, returns true/false
-      var open = nav.classList.toggle("open");
-      // update aria-expanded for accessibility (screen readers)
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.addEventListener('click', () => {
+      // Toggles the 'open' class on the nav
+      const isOpen = nav.classList.toggle('open');
+      
+      // Updates the accessibility attribute
+      toggle.setAttribute('aria-expanded', isOpen);
+      
+      // Changes the icon from hamburger to X
+      toggle.textContent = isOpen ? '✕' : '☰';
     });
   }
 
