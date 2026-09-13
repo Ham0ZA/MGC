@@ -1,4 +1,5 @@
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addGlobalData("baseUrl", "/MGC"); 
   eleventyConfig.addFilter("date", function (dateObj) {
     if (!dateObj) return "";
     const d = new Date(dateObj);
