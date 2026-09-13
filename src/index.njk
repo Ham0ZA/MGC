@@ -21,7 +21,7 @@ permalink: "/index.html"
       <p class="hero-kicker">Special Review</p>
       <h1>{{ hero.data.title }}</h1>
       <p class="excerpt">{{ hero.data.excerpt }}</p>
-      <a href="{{ hero.url }}" class="btn">Read the full review</a>
+      <a href="{{ baseUrl }}{{ hero.url }}" class="btn">Read the full review</a>
     </div>
   </div>
 </section>
@@ -33,7 +33,7 @@ permalink: "/index.html"
     </div>
     <div class="grid">
       {% for review in allReviews.slice(1, 4) %}
-        <a class="card" href="{{ review.url }}">
+        <a class="card" href="{{ baseUrl }}{{ review.url }}">
           <div class="cover {{ review.data.cover_class }}">
             {% if review.data.cover_image %}
               <img src="{{ baseUrl }}{{ review.data.cover_image }}" alt="{{ review.data.title }}" class="cover-image">
