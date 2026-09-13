@@ -33,7 +33,7 @@ permalink: "/index.html"
     </div>
     <div class="grid">
       {% for review in allReviews.slice(1, 4) %}
-        <a class="card" href="{{ baseUrl }}{{ review.url }}">
+        <a class="card" href="{{ review.url }}">
           <div class="cover {{ review.data.cover_class }}">
             {% if review.data.cover_image %}
               <img src="{{ baseUrl }}{{ review.data.cover_image }}" alt="{{ review.data.title }}" class="cover-image">
