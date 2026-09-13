@@ -1,5 +1,5 @@
 {
   "layout": "review.njk",
   "tags": ["reviews"],
-  "permalink": "{{ baseUrl }}/reviews/{{ page.fileSlug }}.html"
+  "permalink": "reviews/{{ page.fileSlug }}/index.html"
 }
