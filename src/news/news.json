@@ -2,5 +2,5 @@
   "layout": "post.njk",
   "tags": ["news"],
   "kind": "News",
-  "permalink": "news/{{ page.fileSlug }}.html"
+  "permalink": "{{ baseUrl }}/news/{{ page.fileSlug }}.html"
 }
