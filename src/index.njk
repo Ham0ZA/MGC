@@ -12,7 +12,7 @@ permalink: "/index.html"
   <div class="container">
     <div class="cover {{ hero.data.cover_class }}">
       {% if hero.data.cover_image %}
-              <img src="{{ hero.data.cover_image }}" alt="{{ hero.data.title }}" class="cover-image">
+              <img src="{{ baseUrl }}{{ hero.data.cover_image }}" alt="{{ hero.data.title }}" class="cover-image">
               {% else %}
                 <span class="cover-label">{{ hero.data.title }}</span>
               {% endif %}
@@ -36,7 +36,7 @@ permalink: "/index.html"
         <a class="card" href="{{ review.url }}">
           <div class="cover {{ review.data.cover_class }}">
             {% if review.data.cover_image %}
-              <img src="{{ review.data.cover_image }}" alt="{{ review.data.title }}" class="cover-image">
+              <img src="{{ baseUrl }}{{ review.data.cover_image }}" alt="{{ review.data.title }}" class="cover-image">
               {% else %}
                 <span class="cover-label">{{ review.data.title }}</span>
               {% endif %}

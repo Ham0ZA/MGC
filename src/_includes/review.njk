@@ -34,7 +34,7 @@ layout: base.njk
       {# cover_image is optional — if the admin form has one, show it;
          otherwise fall back to just the title text on a colored box #}
       {% if cover_image %}
-      <img src="{{ cover_image }}" alt="{{ title }}" class="cover-image">
+      <img src="{{ baseUrl }}{{ cover_image }}" alt="{{ title }}" class="cover-image">
       {% else %}
       <span class="cover-label">{{ title }}</span>
       {% endif %}
