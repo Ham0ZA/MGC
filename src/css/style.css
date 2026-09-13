@@ -536,8 +536,11 @@ p {
 
 .review-body {
   padding: 48px 0;
+}
+
+.review-grid {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 280px 1fr;
   gap: 56px;
 }
 
@@ -606,13 +609,16 @@ p {
 }
 
 @media (max-width: 760px) {
-  .review-body {
+  .review-grid {
     grid-template-columns: 1fr;
   }
 
   .review-body .cover {
     position: static;
+    width: 100%;
     max-width: 220px;
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 
   .pros-cons {

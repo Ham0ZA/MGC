@@ -1,13 +1,25 @@
+{# 
+  This is a LAYOUT file — it doesn't have its own content.
+  Every review .md file (ds.md, qq.md, resident-evil-2.md...) points to this
+  via "layout: review.njk" in its own front matter (set automatically by
+  src/reviews/reviews.json for every file in that folder).
+  Whatever front matter fields that .md file has — title, meta, pros, etc —
+  become variables you can use directly here, like {{ title }} below.
+#}
 ---
-layout: base.njk
+layout: base.njk   {# this file itself is wrapped by base.njk (the header/nav/footer) #}
 ---
+
 <section class="review-head">
   <div class="container">
     <div class="meta-row">
       <span>Review</span>
       <span>·</span>
+      {# 'meta' is a LIST now (e.g. ["Action","Shooter"]) — join(", ") turns
+         it into one readable string: "Action, Shooter" #}
       <span>{{ (meta | join(", ")) }}</span>
       <span>·</span>
+      {# 'date' is a custom filter you already have — see .eleventy.js #}
       <time>{{ date | date }}</time>
     </div>
     <h1>{{ title }}</h1>
@@ -15,9 +27,12 @@ layout: base.njk
 </section>
 
 <section class="review-body">
-  <div class="container" style="display:grid; grid-template-columns:280px 1fr; gap:56px;">
+  {# inline style here sets up the 2-column layout: cover box (280px) + text (rest) #}
+  <div class="container review-grid">
 
     <aside class="cover {{ cover_class }}">
+      {# cover_image is optional — if the admin form has one, show it;
+         otherwise fall back to just the title text on a colored box #}
       {% if cover_image %}
       <img src="{{ cover_image }}" alt="{{ title }}" class="cover-image">
       {% else %}
@@ -27,14 +42,18 @@ layout: base.njk
 
     <div class="article-text">
 
+      {# this is the actual markdown you wrote in the CMS body field.
+         '| safe' tells Nunjucks "this is already real HTML, don't escape it" #}
       {{ content | safe }}
 
+      {# only show this whole section if you actually filled in pros or cons #}
       {% if pros or cons %}
       <h2>Pros and Cons</h2>
       <div class="pros-cons">
         <div class="box pros">
           <h4>Positives</h4>
           <ul>
+            {# loop over every item in the 'pros' list, print each as <li> #}
             {% for p in pros %}<li>{{ p }}</li>{% endfor %}
           </ul>
         </div>
@@ -47,6 +66,7 @@ layout: base.njk
       </div>
       {% endif %}
 
+      {# 'cta' is your closing line/rating — only show the box if it's filled in #}
       {% if cta %}
       <div class="cta-question">
         <p>{{ cta }}</p>
