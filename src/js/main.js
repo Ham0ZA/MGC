@@ -39,4 +39,40 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+  // ---- Genre carousel arrows ----
+var genreContainer = document.querySelector(".chips-container");
+var leftArrow = document.querySelector(".genre-arrow-left");
+var rightArrow = document.querySelector(".genre-arrow-right");
+
+if (genreContainer && leftArrow && rightArrow) {
+
+  function updateGenreArrows() {
+    var maxScroll =
+      genreContainer.scrollWidth - genreContainer.clientWidth;
+
+    leftArrow.disabled = genreContainer.scrollLeft <= 0;
+    rightArrow.disabled =
+      genreContainer.scrollLeft >= maxScroll - 1;
+  }
+
+  leftArrow.addEventListener("click", function () {
+    genreContainer.scrollBy({
+      left: -250,
+      behavior: "smooth"
+    });
+  });
+
+  rightArrow.addEventListener("click", function () {
+    genreContainer.scrollBy({
+      left: 250,
+      behavior: "smooth"
+    });
+  });
+
+  genreContainer.addEventListener("scroll", updateGenreArrows);
+
+  window.addEventListener("resize", updateGenreArrows);
+
+  updateGenreArrows();
+}
 });
