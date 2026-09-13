@@ -13,17 +13,17 @@
 
 <header class="site-header">
   <div class="container">
-    <a href="/" class="logo">
-  <img src="./images/logo.png"  height="100" style="flex:none; width:auto;">
+    <a href="{{ baseUrl }}/" class="logo">
+  <img src="{{ baseUrl }}/images/logo.png"  height="100" style="flex:none; width:auto;">
     </a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
     <nav class="main-nav">
       <ul>
-        <li><a href="/" {% if page.url == "{{ baseUrl }}/" %}aria-current="page"{% endif %}>Home</a></li>
-        <li><a href="/reviews.html" {% if page.url == "{{ baseUrl }}/reviews.html" %}aria-current="page"{% endif %}>Reviews</a></li>
-	<li><a href="/articles.html" {% if page.url == "{{ baseUrl }}/articles.html" %}aria-current="page"{% endif %}>Articles</a></li>
-	<li><a href="/news.html" {% if page.url == "{{ baseUrl }}/news.html" %}aria-current="page"{% endif %}>News</a></li>
-        <li><a href="/about.html" {% if page.url == "{{ baseUrl }}/about.html" %}aria-current="page"{% endif %}>About us</a></li>
+        <li><a href="{{ baseUrl }}/" {% if page.url == "{{ baseUrl }}/" %}aria-current="page"{% endif %}>Home</a></li>
+        <li><a href="{{ baseUrl }}/reviews.html" {% if page.url == "{{ baseUrl }}/reviews.html" %}aria-current="page"{% endif %}>Reviews</a></li>
+	<li><a href="{{ baseUrl }}/articles.html" {% if page.url == "{{ baseUrl }}/articles.html" %}aria-current="page"{% endif %}>Articles</a></li>
+	<li><a href="{{ baseUrl }}/news.html" {% if page.url == "{{ baseUrl }}/news.html" %}aria-current="page"{% endif %}>News</a></li>
+        <li><a href="{{ baseUrl }}/about.html" {% if page.url == "{{ baseUrl }}/about.html" %}aria-current="page"{% endif %}>About us</a></li>
       </ul>
     </nav>
   </div>
