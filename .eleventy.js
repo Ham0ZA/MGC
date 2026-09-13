@@ -1,5 +1,6 @@
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addGlobalData("baseUrl", "/MGC"); 
+  const isProduction = process.env.ELEVENTY_ENV === "production";
+  eleventyConfig.addGlobalData("baseUrl", isProduction ? "/MGC" : "");
   eleventyConfig.addFilter("date", function (dateObj) {
     if (!dateObj) return "";
     const d = new Date(dateObj);
