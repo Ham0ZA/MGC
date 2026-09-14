@@ -109,10 +109,13 @@ p {
   font-size: 1.3rem;
   color: var(--text);
   display: flex;
-  align-items: center; /* Centers the text/icon inside the logo box */
-  height: 100%;        /* Makes the logo fill the full 76px height */
+  align-items: center;
+  /* Centers the text/icon inside the logo box */
+  height: 100%;
+  /* Makes the logo fill the full 76px height */
   gap: 10px;
-  margin-top: 5px;           /* Ensure no default margins are pushing it */
+  margin-top: 5px;
+  /* Ensure no default margins are pushing it */
 }
 
 .main-nav ul {
@@ -250,7 +253,8 @@ p {
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 48px;
-  align-items: stretch; /* Change from center to stretch */
+  align-items: stretch;
+  /* Change from center to stretch */
 }
 
 .hero .cover-wrapper {
@@ -263,7 +267,8 @@ p {
   font-weight: 700;
   font-size: 0.95rem;
   margin-bottom: 14px;
-  line-height: 1;     /* Removes vertical font leading gap */
+  line-height: 1;
+  /* Removes vertical font leading gap */
   margin-top: 0;
 }
 
@@ -371,7 +376,52 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
+
+  .content-carousel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .content-carousel .carousel-container {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .content-carousel .carousel-track {
+    display: flex;
+    gap: 28px;
+  }
+
+  .content-carousel .carousel-track>* {
+    flex: 0 0 calc((100% - 56px) / 3);
+  }
+
+  @media (max-width: 760px) {
+    .content-carousel .carousel-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+    }
+
+    .content-carousel .carousel-track>* {
+      flex-basis: calc((100% - 28px) / 2);
+      scroll-snap-align: start;
+    }
+
+    .content-carousel .genre-arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .content-carousel .carousel-track>* {
+      flex-basis: 150px;
+    }
+  }
 }
+
 
 @media (max-width: 760px) {
   .grid {
@@ -668,22 +718,27 @@ p {
 @media (max-width: 760px) {
   .review-grid {
     grid-template-columns: 1fr;
-    gap: 0 !important; /* Remove all grid gaps */
-    row-gap: 24px !important; /* Only apply gap between rows */
+    gap: 0 !important;
+    /* Remove all grid gaps */
+    row-gap: 24px !important;
+    /* Only apply gap between rows */
   }
-  
+
   .review-body {
-    padding-top: 0 !important; /* Force remove top padding */
+    padding-top: 0 !important;
+    /* Force remove top padding */
     padding-bottom: 32px !important;
   }
 
   .review-body .cover {
     position: relative !important;
-    top: 0 !important; /* Override sticky top */
+    top: 0 !important;
+    /* Override sticky top */
     width: auto;
     height: auto;
     aspect-ratio: 3 / 4;
-    margin-top: 32px !important; /* Force remove top margin */
+    margin-top: 32px !important;
+    /* Force remove top margin */
     margin-bottom: 0 !important;
     padding-top: 0 !important;
     display: block !important;

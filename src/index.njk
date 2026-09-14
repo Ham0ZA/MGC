@@ -31,8 +31,11 @@ permalink: "/index.html"
       <h2>Latest reviews</h2>
       <a href="{{ baseUrl }}/reviews.html">See more</a>
     </div>
-    <div class="grid">
-      {% for review in allReviews.slice(1, 4) %}
+        <div class="content-carousel">
+      <button class="genre-arrow carousel-arrow-left" type="button" aria-label="Scroll reviews left">&#10094;</button>
+      <div class="carousel-container">
+        <div class="carousel-track">
+      {% for review in allReviews.slice(1, 6) %}
         <a class="card" href="{{ baseUrl }}{{ review.url }}">
           <div class="cover {{ review.data.cover_class }}">
             {% if review.data.cover_image %}
@@ -44,7 +47,9 @@ permalink: "/index.html"
             <h3>{{ review.data.title }}</h3>
           </a>
         {% endfor %}
+        </div>
       </div>
+      <button class="genre-arrow carousel-arrow-right" type="button" aria-label="Scroll reviews right">&#10095;</button>
     </div>
   </section>
   <section class="section">
@@ -53,9 +58,12 @@ permalink: "/index.html"
         <h2>Latest news</h2>
         <a href="{{ baseUrl }}/news.html">See more</a>
       </div>
-      <div class="news-list">
+            <div class="content-carousel">
+        <button class="genre-arrow carousel-arrow-left" type="button" aria-label="Scroll news left">&#10094;</button>
+        <div class="carousel-container">
+          <div class="carousel-track">
         {% if allNews.length > 0 %}
-          {% for item in allNews.slice(0, 4) %}
+          {% for item in allNews.slice(0, 5) %}
             <a class="news-row" href="{{ baseUrl }}{{ item.url }}">
               <time>{{ item.data.date | date }}</time>
               <div>
@@ -67,6 +75,9 @@ permalink: "/index.html"
         {% else %}
           <p style="color:var(--text-muted);">No news published yet.</p>
         {% endif %}
+          </div>
+        </div>
+        <button class="genre-arrow carousel-arrow-right" type="button" aria-label="Scroll news right">&#10095;</button>
       </div>
     </div>
   </section>

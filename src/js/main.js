@@ -79,4 +79,30 @@ if (genreContainer && leftArrow && rightArrow) {
 
   updateGenreArrows();
 }
+  document.querySelectorAll(".content-carousel").forEach(function (wrap) {
+    var container = wrap.querySelector(".carousel-container");
+    var track = wrap.querySelector(".carousel-track");
+    var leftBtn = wrap.querySelector(".carousel-arrow-left");
+    var rightBtn = wrap.querySelector(".carousel-arrow-right");
+    if (!container || !track || !leftBtn || !rightBtn) return;
+
+    function amount() {
+      var card = track.firstElementChild;
+      return card ? card.getBoundingClientRect().width + 28 : 300;
+    }
+    function update() {
+      var maxScroll = container.scrollWidth - container.clientWidth;
+      leftBtn.disabled = container.scrollLeft <= 0;
+      rightBtn.disabled = container.scrollLeft >= maxScroll - 1;
+    }
+    leftBtn.addEventListener("click", function () {
+      container.scrollBy({ left: -amount(), behavior: "smooth" });
+    });
+    rightBtn.addEventListener("click", function () {
+      container.scrollBy({ left: amount(), behavior: "smooth" });
+    });
+    container.addEventListener("scroll", update);
+    window.addEventListener("resize", update);
+    update();
+  });
 });
