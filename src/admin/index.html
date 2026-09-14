@@ -609,7 +609,7 @@ function attachEditHandlers() {
   if (bodyField) {
     const bodyTextarea = document.querySelector(`[data-field="${bodyField.name}"]`);
     if (bodyTextarea && typeof EasyMDE !== "undefined") {
-      window.__bodyEditor = new EasyMDE({
+            window.__bodyEditor = new EasyMDE({
         element: bodyTextarea,
         spellChecker: false,
         autofocus: false,
@@ -619,7 +619,34 @@ function attachEditHandlers() {
         toolbar: [
           "bold", "italic", "heading", "|",
           "quote", "unordered-list", "ordered-list", "|",
-          "link", "image", "|",
+          "link",
+          {
+            name: "upload-image",
+            action: (editor) => {
+              const input = document.createElement("input");
+              input.type = "file";
+              input.accept = "image/*";
+              input.onchange = async () => {
+                const file = input.files[0];
+                if (!file) return;
+                toast("Uploading image…", "info");
+                try {
+                  const path = await uploadImage(file);
+                  const url = resolveImage(path);
+                  const cm = editor.codemirror;
+                  const selected = cm.getSelection();
+                  cm.replaceSelection(`![${selected || "image"}](${url})`);
+                  toast("Image inserted");
+                } catch (e) {
+                  toast("Upload failed: " + e.message, "error");
+                }
+              };
+              input.click();
+            },
+            className: "fa fa-upload",
+            title: "Upload image from your device"
+          },
+          "|",
           "preview", "side-by-side", "fullscreen", "|",
           "guide"
         ]
