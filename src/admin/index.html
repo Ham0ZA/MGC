@@ -490,6 +490,144 @@
         .EasyMDEContainer .cm-s-easymde .cm-comment {
             background: var(--surface-alt);
         }
+
+        /* =========================================================
+   Mobile polish
+   ========================================================= */
+        @media (max-width: 640px) {
+
+            /* Header: stack title above buttons */
+            .admin-header {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .admin-header h1 {
+                font-size: 1rem;
+                flex: 1 1 100%;
+            }
+
+            .admin-header .actions {
+                flex: 1 1 100%;
+            }
+
+            .admin-header .actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            /* Tabs: shrink and allow horizontal scroll */
+            .tabs {
+                padding: 0 12px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .tab {
+                padding: 12px 14px;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+
+            /* Main content: less padding */
+            .main {
+                padding: 16px 12px;
+            }
+
+            /* List header: stack */
+            .list-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .list-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .list-header .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* List items: stack buttons under info */
+            .list-item {
+                flex-wrap: wrap;
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .list-item img,
+            .list-item>div:first-child {
+                width: 40px !important;
+                height: 54px !important;
+            }
+
+            .list-item-info {
+                flex: 1 1 100%;
+                order: 2;
+            }
+
+            .list-item-actions {
+                flex: 1 1 100%;
+                order: 3;
+                justify-content: stretch;
+            }
+
+            .list-item-actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            /* Form buttons (Cancel / Save / Publish) */
+            #cancel-btn,
+            #save-btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            /* Toast: full width at bottom */
+            .toast {
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                max-width: none;
+                font-size: 0.9rem;
+                padding: 12px 14px;
+            }
+
+            /* EasyMDE: smaller font, tighter toolbar */
+            .EasyMDEContainer .CodeMirror {
+                font-size: 0.9rem;
+            }
+
+            .EasyMDEContainer .editor-toolbar {
+                padding: 4px 6px;
+            }
+
+            .EasyMDEContainer .editor-toolbar button {
+                width: 28px;
+                height: 28px;
+            }
+
+            /* Chip group: slightly smaller */
+            .chip-opt {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            /* Image preview: allow smaller */
+            .img-preview {
+                max-width: 100%;
+                max-height: 220px;
+            }
+        }
     </style>
 </head>
 
