@@ -522,7 +522,14 @@ function attachListHandlers() {
 function renderEditView() {
   const c = COLLECTIONS[state.collection];
   const isNew = !state.editing.path;
-  const d = state.editing.data || {};
+
+  // Merge body into data so renderField can find it
+  const d = { ...state.editing.data };
+  const bodyField = c.fields.find(f => f.isBody);
+  if (bodyField && state.editing.body) {
+    d[bodyField.name] = state.editing.body;
+  }
+
   const fieldsHtml = c.fields.map(f => renderField(f, d)).join("");
 
   return `
