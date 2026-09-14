@@ -713,12 +713,19 @@
                 reader.readAsDataURL(blob);
             });
 
-            await gh(path, {
+            const result = await gh(path, {
                 method: "PUT",
                 body: JSON.stringify({ message: `Upload ${filename}`, content, branch: BRANCH })
             });
 
+            // Track this upload so we can delete it if the user cancels
+            state.pendingUploads.push({
+                path: path,
+                sha: result.content.sha
+            });
+
             toast("Image uploaded");
+
             return `${PUBLIC_FOLDER}/${filename}`;
         }
 
@@ -750,7 +757,8 @@
             items: [],
             editing: null,
             loading: false,
-            loginError: null
+            loginError: null,
+            pendingUploads: []  // { path, sha }[] — cleaned up on cancel
         };
 
         /* =========================================================
@@ -818,6 +826,12 @@
 
             document.querySelectorAll(".tab").forEach(tab => {
                 tab.addEventListener("click", async () => {
+                    // If leaving an edit with pending uploads, clean them up
+                    if (state.view === "edit" && state.pendingUploads.length) {
+                        if (!confirm("You have unsaved uploads. Discard them?")) return;
+                        await cleanupPendingUploads();
+                    }
+                    destroyBodyEditor();
                     state.collection = tab.dataset.collection;
                     state.view = "list";
                     state.editing = null;
@@ -895,6 +909,7 @@
         function attachListHandlers() {
             const newBtn = document.getElementById("new-btn");
             if (newBtn) newBtn.addEventListener("click", () => {
+                state.pendingUploads = [];
                 state.editing = { path: null, sha: null, data: {}, body: "" };
                 state.view = "edit";
                 renderMain();
@@ -905,6 +920,7 @@
                     const path = btn.dataset.edit;
                     const item = state.items.find(i => i.path === path);
                     if (item) {
+                        state.pendingUploads = [];
                         state.editing = { path: item.path, sha: item.sha, data: { ...item.data }, body: item.body };
                         state.view = "edit";
                         renderMain();
@@ -1079,9 +1095,10 @@
                 }
             }
 
-            document.getElementById("cancel-btn").addEventListener("click", () => {
+            document.getElementById("cancel-btn").addEventListener("click", async () => {
                 if (!confirm("Discard changes?")) return;
                 destroyBodyEditor();
+                await cleanupPendingUploads();
                 state.view = "list";
                 state.editing = null;
                 renderMain();
@@ -1238,6 +1255,7 @@
 
                 toast(isNew ? "Published!" : "Saved!");
                 destroyBodyEditor();
+                state.pendingUploads = [];  // keep these — they're now part of the review
                 await loadList();
                 state.view = "list";
                 state.editing = null;
@@ -1286,6 +1304,20 @@
             const base = isGitHubPages ? "/MGC" : "";
             if (path.startsWith("/")) return base + path;
             return base + "/" + path;
+        }
+
+        async function cleanupPendingUploads() {
+            if (!state.pendingUploads.length) return;
+            const count = state.pendingUploads.length;
+            toast(`Removing ${count} unused image${count > 1 ? "s" : ""}…`, "info");
+            for (const upload of state.pendingUploads) {
+                try {
+                    await deleteFile(upload.path, upload.sha, `Cleanup unused image: ${upload.path.split("/").pop()}`);
+                } catch (e) {
+                    console.warn("Could not delete pending upload:", upload.path, e);
+                }
+            }
+            state.pendingUploads = [];
         }
 
         function destroyBodyEditor() {
