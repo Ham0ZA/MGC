@@ -32,6 +32,63 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
     });
+
+      // ---- Site Search ----
+  var searchInput = document.getElementById("search-input");
+  var searchResults = document.getElementById("search-results");
+
+  if (searchInput && searchResults) {
+    var baseUrlMeta = document.querySelector('meta[name="base-url"]');
+    var baseUrl = baseUrlMeta ? baseUrlMeta.content : "";
+    var searchIndex = [];
+
+    fetch(baseUrl + "/search-index.json")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        searchIndex = data;
+        renderSearch("");
+      })
+      .catch(function () {
+        searchResults.innerHTML = '<p style="color:var(--text-muted);">Failed to load search index.</p>';
+      });
+
+    function renderSearch(query) {
+      var q = query.trim().toLowerCase();
+      var matches = searchIndex.filter(function (item) {
+        if (!q) return true;
+        return (item.title + " " + item.excerpt + " " + item.type).toLowerCase().indexOf(q) !== -1;
+      });
+
+      if (!matches.length) {
+        searchResults.innerHTML = '<p class="search-empty">No results for "' + escapeHtml(query) + '".</p>';
+        return;
+      }
+
+      // Sort by type then title
+      matches.sort(function (a, b) {
+        if (a.type !== b.type) return a.type.localeCompare(b.type);
+        return a.title.localeCompare(b.title);
+      });
+
+      searchResults.innerHTML = matches.map(function (item) {
+        return '<a class="search-result" href="' + baseUrl + item.url + '">' +
+          '<span class="search-type">' + escapeHtml(item.type) + '</span>' +
+          '<h3>' + escapeHtml(item.title) + '</h3>' +
+          '<p>' + escapeHtml(item.excerpt) + '</p>' +
+          '</a>';
+      }).join("");
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    searchInput.addEventListener("input", function () {
+      renderSearch(searchInput.value);
+    });
+  }
   }
 
   // ---- Genre carousel arrows ----
