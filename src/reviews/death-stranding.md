@@ -26,3 +26,5 @@ cta: We give it a questionable 8/10.
 Death Stranding is a slow-paced sci-fi journey where players act as a courier reconnecting a post-apocalyptic America by turning cargo deliveries into a challenging mechanical puzzle. Despite a polarizing and convoluted story, the game offers breathtaking visuals, a haunting soundtrack, and an innovative asynchronous multiplayer system that defines a uniquely rewarding experience. For more details, visit Polygon.
 
 Death Stranding is a slow-paced sci-fi journey where players act as a courier reconnecting a post-apocalyptic America by turning cargo deliveries into a challenging mechanical puzzle. Despite a polarizing and convoluted story, the game offers breathtaking visuals, a haunting soundtrack, and an innovative asynchronous multiplayer system that defines a uniquely rewarding experience. For more details, visit Polygon.
+
+![image](/MGC/images/uploads/1789408574066-df31a636d493b0e715a5978a1c873f64.png)
