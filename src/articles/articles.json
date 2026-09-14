@@ -2,5 +2,5 @@
   "layout": "post.njk",
   "tags": ["articles"],
   "kind": "Article",
-  "permalink": "{{ baseUrl }}/articles/{{ page.fileSlug }}.html"
+  "permalink": "/articles/{{ page.fileSlug }}.html"
 }
