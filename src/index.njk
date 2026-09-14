@@ -8,6 +8,7 @@ permalink: "/index.html"
 {% set allReviews = collections.reviews | reverse %}
 {% set hero = allReviews[0] %}
 {% set allNews = collections.news | reverse %}
+{% set allArticles = collections.articles | reverse %}
 <section class="hero">
   <div class="container">
     <div class="cover {{ hero.data.cover_class }}">
@@ -74,6 +75,35 @@ permalink: "/index.html"
           {% endfor %}
         {% else %}
           <p style="color:var(--text-muted);">No news published yet.</p>
+        {% endif %}
+          </div>
+        </div>
+        <button class="genre-arrow carousel-arrow-right" type="button" aria-label="Scroll news right">&#10095;</button>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Latest articles</h2>
+        <a href="{{ baseUrl }}/articles.html">See more</a>
+      </div>
+            <div class="content-carousel">
+        <button class="genre-arrow carousel-arrow-left" type="button" aria-label="Scroll news left">&#10094;</button>
+        <div class="carousel-container">
+          <div class="carousel-track">
+        {% if allArticles.length > 0 %}
+          {% for item in allArticles.slice(0, 5) %}
+            <a class="news-row" href="{{ baseUrl }}{{ item.url }}">
+              <time>{{ item.data.date | date }}</time>
+              <div>
+                <h3>{{ item.data.title }}</h3>
+                <p>{{ item.data.excerpt }}</p>
+              </div>
+            </a>
+          {% endfor %}
+        {% else %}
+          <p style="color:var(--text-muted);">No articles published yet.</p>
         {% endif %}
           </div>
         </div>
