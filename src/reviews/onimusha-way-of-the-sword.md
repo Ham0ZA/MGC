@@ -1,8 +1,13 @@
 ---
 title: "Onimusha: Way of the Sword"
+author: Hamza Mamouni
 meta:
   - RPG
   - Adventure
+platform:
+  - PC
+  - PS5
+  - Xbox Series X/S
 cover_image: /images/uploads/a3962c0ca7ca8033daaa9fac886e90b8.jpg
 date: 2026-09-14T12:57:00.000+01:00
 excerpt: >-

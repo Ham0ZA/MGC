@@ -1,25 +1,15 @@
 ---
 layout: base.njk
 ---
-{#
-  This is a LAYOUT file — it doesn't have its own content.
-  Every review .md file (ds.md, qq.md, resident-evil-2.md...) points to this
-  via "layout: review.njk" in its own front matter (set automatically by
-  src/reviews/reviews.json for every file in that folder).
-  Whatever front matter fields that .md file has — title, meta, pros, etc —
-  become variables you can use directly here, like {{ title }} below.
-#}
 
 <section class="review-head">
   <div class="container">
     <div class="meta-row">
       <span>Review</span>
       <span>·</span>
-      {# 'meta' is a LIST now (e.g. ["Action","Shooter"]) — join(", ") turns
-         it into one readable string: "Action, Shooter" #}
-      <span>{{ (meta | join(", ")) }}</span>
+      {# Show the author's name instead of the genre #}
+      <span>{{ author }}</span>
       <span>·</span>
-      {# 'date' is a custom filter you already have — see .eleventy.js #}
       <time>{{ date | date }}</time>
     </div>
     <h1>{{ title }}</h1>
@@ -27,33 +17,45 @@ layout: base.njk
 </section>
 
 <section class="review-body">
-  {# inline style here sets up the 2-column layout: cover box (280px) + text (rest) #}
   <div class="container review-grid">
 
-    <aside class="cover {{ cover_class }}">
-      {# cover_image is optional — if the admin form has one, show it;
-         otherwise fall back to just the title text on a colored box #}
-      {% if cover_image %}
-      <img src="{{ baseUrl }}{{ cover_image }}" alt="{{ title }}" class="cover-image">
-      {% else %}
-      <span class="cover-label">{{ title }}</span>
-      {% endif %}
+    {# Sidebar wrapper keeps the cover AND tags together when sticky #}
+    <aside class="review-sidebar">
+      
+      <div class="cover {{ cover_class }}">
+        {% if cover_image %}
+        <img src="{{ baseUrl }}{{ cover_image }}" alt="{{ title }}" class="cover-image">
+        {% else %}
+        <span class="cover-label">{{ title }}</span>
+        {% endif %}
+      </div>
+
+      {# Genre and Platform under the cover #}
+      <div class="review-meta-tags">
+        {% if meta %}
+          <div class="meta-tag">
+            <span class="meta-label">Genre:</span> {{ meta | join(", ") }}
+          </div>
+        {% endif %}
+        {% if platform %}
+          <div class="meta-tag">
+            <span class="meta-label">Platform:</span> {{ platform | join(", ") }}
+          </div>
+        {% endif %}
+      </div>
+
     </aside>
 
     <div class="article-text">
 
-      {# this is the actual markdown you wrote in the CMS body field.
-         '| safe' tells Nunjucks "this is already real HTML, don't escape it" #}
       {{ content | safe }}
 
-      {# only show this whole section if you actually filled in pros or cons #}
       {% if pros or cons %}
       <h2>Pros and Cons</h2>
       <div class="pros-cons">
         <div class="box pros">
           <h4>Positives</h4>
           <ul>
-            {# loop over every item in the 'pros' list, print each as <li> #}
             {% for p in pros %}<li>{{ p }}</li>{% endfor %}
           </ul>
         </div>
@@ -66,7 +68,6 @@ layout: base.njk
       </div>
       {% endif %}
 
-      {# 'cta' is your closing line/rating — only show the box if it's filled in #}
       {% if cta %}
       <div class="cta-question">
         <p>{{ cta }}</p>

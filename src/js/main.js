@@ -2,39 +2,29 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   // ---- Mobile hamburger menu ----
-  var toggle = document.querySelector(".nav-toggle");   // the ☰ button
-  var nav = document.querySelector(".main-nav");         // the nav links
+  var toggle = document.querySelector(".nav-toggle");
+  var nav = document.querySelector(".main-nav");
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
-      // Toggles the 'open' class on the nav
       const isOpen = nav.classList.toggle('open');
-      
-      // Updates the accessibility attribute
       toggle.setAttribute('aria-expanded', isOpen);
-      
-      // Changes the icon from hamburger to X
       toggle.textContent = isOpen ? '✕' : '☰';
     });
   }
 
   // ---- Genre filter chips on the Reviews page ----
-  var chips = document.querySelectorAll(".chip[data-genre]");   // all filter buttons
-  var cards = document.querySelectorAll("[data-genre-tag]");    // all review cards
+  var chips = document.querySelectorAll(".chip[data-genre]");
+  var cards = document.querySelectorAll("[data-genre-tag]");
   if (chips.length && cards.length) {
-    // attach a click handler to every chip
     chips.forEach(function (chip) {
       chip.addEventListener("click", function () {
-        var genre = chip.getAttribute("data-genre");   // e.g. "action"
+        var genre = chip.getAttribute("data-genre");
 
-        // visually reset every chip, then mark only the clicked one as active
         chips.forEach(function (c) { c.setAttribute("aria-pressed", "false"); });
         chip.setAttribute("aria-pressed", "true");
 
-        // show/hide each card depending on whether its genres match
         cards.forEach(function (card) {
-          var tags = card.getAttribute("data-genre-tag");   // e.g. "Action Shooter"
-          // .toLowerCase() on both sides so "Action" matches "action" —
-          // without this, capitalized genres never matched the lowercase chips
+          var tags = card.getAttribute("data-genre-tag");
           card.style.display =
             genre === "all" || tags.toLowerCase().indexOf(genre.toLowerCase()) !== -1
               ? ""
@@ -43,42 +33,42 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
   // ---- Genre carousel arrows ----
-var genreContainer = document.querySelector(".chips-container");
-var leftArrow = document.querySelector(".genre-arrow-left");
-var rightArrow = document.querySelector(".genre-arrow-right");
+  var genreContainer = document.querySelector(".chips-container");
+  var leftArrow = document.querySelector(".genre-arrow-left");
+  var rightArrow = document.querySelector(".genre-arrow-right");
 
-if (genreContainer && leftArrow && rightArrow) {
+  if (genreContainer && leftArrow && rightArrow) {
 
-  function updateGenreArrows() {
-    var maxScroll =
-      genreContainer.scrollWidth - genreContainer.clientWidth;
+    function updateGenreArrows() {
+      var maxScroll = genreContainer.scrollWidth - genreContainer.clientWidth;
 
-    leftArrow.disabled = genreContainer.scrollLeft <= 0;
-    rightArrow.disabled =
-      genreContainer.scrollLeft >= maxScroll - 1;
+      // If there's nothing to scroll, hide both arrows
+      if (maxScroll <= 1) {
+        leftArrow.disabled = true;
+        rightArrow.disabled = true;
+        return;
+      }
+
+      leftArrow.disabled = genreContainer.scrollLeft <= 0;
+      rightArrow.disabled = genreContainer.scrollLeft >= maxScroll - 1;
+    }
+
+    leftArrow.addEventListener("click", function () {
+      genreContainer.scrollBy({ left: -250, behavior: "smooth" });
+    });
+
+    rightArrow.addEventListener("click", function () {
+      genreContainer.scrollBy({ left: 250, behavior: "smooth" });
+    });
+
+    genreContainer.addEventListener("scroll", updateGenreArrows);
+    window.addEventListener("resize", updateGenreArrows);
+    updateGenreArrows();
   }
 
-  leftArrow.addEventListener("click", function () {
-    genreContainer.scrollBy({
-      left: -250,
-      behavior: "smooth"
-    });
-  });
-
-  rightArrow.addEventListener("click", function () {
-    genreContainer.scrollBy({
-      left: 250,
-      behavior: "smooth"
-    });
-  });
-
-  genreContainer.addEventListener("scroll", updateGenreArrows);
-
-  window.addEventListener("resize", updateGenreArrows);
-
-  updateGenreArrows();
-}
+  // ---- Content carousels (Homepage) ----
   document.querySelectorAll(".content-carousel").forEach(function (wrap) {
     var container = wrap.querySelector(".carousel-container");
     var track = wrap.querySelector(".carousel-track");
@@ -90,17 +80,29 @@ if (genreContainer && leftArrow && rightArrow) {
       var card = track.firstElementChild;
       return card ? card.getBoundingClientRect().width + 28 : 300;
     }
+
     function update() {
       var maxScroll = container.scrollWidth - container.clientWidth;
+
+      // If there's nothing to scroll, hide both arrows
+      if (maxScroll <= 1) {
+        leftBtn.disabled = true;
+        rightBtn.disabled = true;
+        return;
+      }
+
       leftBtn.disabled = container.scrollLeft <= 0;
       rightBtn.disabled = container.scrollLeft >= maxScroll - 1;
     }
+
     leftBtn.addEventListener("click", function () {
       container.scrollBy({ left: -amount(), behavior: "smooth" });
     });
+
     rightBtn.addEventListener("click", function () {
       container.scrollBy({ left: amount(), behavior: "smooth" });
     });
+
     container.addEventListener("scroll", update);
     window.addEventListener("resize", update);
     update();

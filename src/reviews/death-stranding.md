@@ -1,9 +1,16 @@
 ---
 title: Death Stranding
+author: Hamza Mamouni
 meta:
   - RPG
   - Adventure
   - Shooter
+platform:
+  - PC
+  - PS5
+  - Xbox Series X/S
+  - PS4
+  - Xbox One
 cover_image: /images/uploads/df31a636d493b0e715a5978a1c873f64.png
 date: 2026-09-14T12:35:00.000+01:00
 excerpt: >-

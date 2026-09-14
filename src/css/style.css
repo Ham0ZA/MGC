@@ -424,6 +424,15 @@ p {
   }
 }
 
+/* ============================================
+   Arrow Visibility (Hide when no scrolling is needed)
+   ============================================ */
+@media (min-width: 761px) {
+  .genre-arrow:disabled {
+    display: none !important;
+  }
+}
+
 @media (max-width: 520px) {
   /* Shows 1 large item on phone */
   .carousel-track > * {
@@ -443,22 +452,6 @@ p {
 
   .hero {
     padding: 36px 0 44px;
-  }
-}
-
-@media (max-width: 520px) {
-  .grid {
-    display: flex;
-    align-items: flex-start;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    gap: 14px;
-  }
-
-  .grid .card {
-    flex: 0 0 250px;
-    scroll-snap-align: start;
   }
 }
 
@@ -684,12 +677,30 @@ p {
   gap: 56px;
 }
 
-.review-body .cover {
+.review-sidebar {
   position: sticky;
   top: 100px;
-  aspect-ratio: unset;
   width: 280px;
+}
+
+.review-sidebar .cover {
+  width: 100%;
   height: 380px;
+  aspect-ratio: unset;
+  margin-bottom: 16px;
+}
+
+.review-meta-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.meta-label {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .article-text>* {
@@ -760,16 +771,23 @@ p {
     padding-bottom: 32px !important;
   }
 
-  .review-body .cover {
+    .review-sidebar {
     position: relative !important;
-    top: 0 !important; /* Override sticky top */
+    top: 0 !important;
+    width: auto;
+  }
+
+  .review-sidebar .cover {
     width: auto;
     height: auto;
     aspect-ratio: 3 / 4;
-    margin-top: 32px !important; /* Force remove top margin */
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
+    margin-top: 32px !important;
+    margin-bottom: 16px !important;
     display: block !important;
+  }
+
+  .review-meta-tags {
+    margin-bottom: 24px;
   }
 
   .pros-cons {

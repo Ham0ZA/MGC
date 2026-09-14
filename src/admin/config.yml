@@ -15,21 +15,28 @@ collections:
     slug: "{{slug}}"
     identifier_field: "title"
     fields:
-      - { label: "Game title", name: "title", widget: "string" }
+      - { label: "Game title", name: "title", widget: "string", required: true }
+      - { label: "Author", name: "author", widget: "string", required: true }
       - label: "Genre"
         name: "meta"
         widget: "select"
         multiple: true
         options: ["Action", "RPG", "Soulslike", "Open-World", "Racing", "Adventure", "Shooter", "Strategy", "Simulation",
           "Sports", "Puzzle", "Horror", "Platformer", "Fighting", "MMO", "Stealth", "Survival", "Rhythm", "Visual Novel", "Party", "Educational"]
-      - { label: "Cover image", name: "cover_image", widget: "image", required: false }
-      - { label: "Publish date", name: "date", widget: "datetime" }
-      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
-      - { label: "Review body (hook + story)", name: "body", widget: "markdown" }
-      - { label: "Pros", name: "pros", widget: "list" }
-      - { label: "Cons", name: "cons", widget: "list" }
+        required: true
+      - label: "Platform"
+        name: "platform"
+        widget: "select"
+        multiple: true
+        options: ["PC", "PS5", "Xbox Series X/S", "Nintendo Switch", "Mobile", "PS4", "Xbox One"]
+        required: true
+      - { label: "Cover image", name: "cover_image", widget: "image", required: true }
+      - { label: "Publish date", name: "date", widget: "datetime", required: true }
+      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text", required: true }
+      - { label: "Review body (hook + story)", name: "body", widget: "markdown", required: true }
+      - { label: "Pros", name: "pros", widget: "list", required: true }
+      - { label: "Cons", name: "cons", widget: "list", required: true }
       - { label: "Rating", name: "cta", widget: "string", required: true }
-      
   - name: "news"
     label: "News"
     label_singular: "News item"
@@ -38,10 +45,10 @@ collections:
     slug: "{{slug}}"
     identifier_field: "title"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish date", name: "date", widget: "datetime" }
-      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Publish date", name: "date", widget: "datetime", required: true }
+      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text", required: true }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
 
   - name: "articles"
     label: "Articles"
@@ -51,7 +58,7 @@ collections:
     slug: "{{slug}}"
     identifier_field: "title"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish date", name: "date", widget: "datetime" }
-      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Publish date", name: "date", widget: "datetime", required: true }
+      - { label: "Short excerpt (shown on cards)", name: "excerpt", widget: "text", required: true }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
