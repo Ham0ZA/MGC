@@ -51,12 +51,12 @@ permalink: "/index.html"
     <div class="container">
       <div class="section-head">
         <h2>Latest news</h2>
-        <a href="/news.html">See more</a>
+        <a href="{{ baseUrl }}/news.html">See more</a>
       </div>
       <div class="news-list">
         {% if allNews.length > 0 %}
           {% for item in allNews.slice(0, 4) %}
-            <a class="news-row" href="{{ item.url }}">
+            <a class="news-row" href="{{ baseUrl }}{{ item.url }}">
               <time>{{ item.data.date | date }}</time>
               <div>
                 <h3>{{ item.data.title }}</h3>
