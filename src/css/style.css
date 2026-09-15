@@ -58,6 +58,9 @@ h4 {
   font-weight: 800;
   margin: 0 0 0.5em 0;
   line-height: 1.3;
+  caret-color: transparent;
+  user-select: text;
+  /* still lets users select/copy the text */
 }
 
 p {
@@ -131,6 +134,7 @@ p {
   color: var(--text-muted);
   padding: 6px 2px;
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
 }
 
 .main-nav a:hover,
@@ -179,7 +183,7 @@ p {
     border-bottom: 1px solid var(--border);
   }
 
-  .main-nav a {
+  .main-nav a:not(.nav-search-result) {
     display: block;
     padding: 14px 0;
   }
@@ -393,7 +397,6 @@ p {
   flex: 1;
   min-width: 0;
   overflow-x: auto;
-  scroll-behavior: smooth;
   display: flex;
   /* Hide scrollbar on desktop */
   -ms-overflow-style: none;
@@ -412,7 +415,9 @@ p {
 
 /* Shows exactly 3 items on desktop */
 .carousel-track>* {
-  flex: 0 0 calc((100% - 56px) / 3);
+  flex: 0 0 min(340px, calc((100% - 56px) / 3));
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @media (max-width: 760px) {
@@ -859,114 +864,6 @@ p {
   color: var(--gold);
 }
 
-/* ============================================
-   Site Search
-   ============================================ */
-.nav-search-item {
-  display: flex;
-  align-items: center;
-}
-
-.nav-search {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 4px;
-  color: var(--text-muted);
-  padding: 0 !important;
-  border-bottom: none !important;
-}
-
-.nav-search:hover,
-.nav-search[aria-current="page"] {
-  color: var(--gold);
-  border-bottom-color: transparent !important;
-}
-
-/* Search page */
-.search-box {
-  position: relative;
-  margin-bottom: 32px;
-}
-
-.search-box .search-icon {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  pointer-events: none;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 14px 16px 14px 48px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text);
-  font-size: 1rem;
-  font-family: var(--font-body);
-}
-
-.search-box input:focus {
-  outline: none;
-  border-color: var(--gold);
-}
-
-.search-results {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.search-result {
-  display: block;
-  padding: 16px 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  transition: border-color 0.15s ease;
-}
-
-.search-result:hover {
-  border-color: var(--gold);
-}
-
-.search-result .search-type {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
-
-.search-result h3 {
-  font-size: 1.1rem;
-  margin: 0 0 6px 0;
-  color: var(--text);
-}
-
-.search-result:hover h3 {
-  color: var(--gold);
-}
-
-.search-result p {
-  color: var(--text-muted);
-  font-size: 0.92rem;
-  margin: 0;
-}
-
-.search-empty {
-  color: var(--text-muted);
-  text-align: center;
-  padding: 40px 20px;
-}
-
 /* Mobile: adjust nav search icon */
 @media (max-width: 760px) {
   .nav-search-item {
@@ -986,5 +883,488 @@ p {
     content: "Search";
     font-size: 0.95rem;
     font-weight: 600;
+  }
+}
+
+/* ============================================
+   Nav Search (inline field + dropdown)
+   ============================================ */
+.nav-search-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 4px;
+  z-index: 10;
+}
+
+.nav-search-input {
+  position: absolute;
+  right: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  opacity: 0;
+  padding: 0;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+  z-index: 20;
+}
+
+.nav-search-item.open .nav-search-input {
+  width: 450px;
+  opacity: 1;
+  padding: 0 12px;
+  border-radius: 4px 4px 0 0;
+  /* ← only round the top */
+}
+
+.nav-search-input:focus {
+  border-color: var(--gold);
+}
+
+.nav-search-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.nav-search-results {
+  position: absolute;
+  top: 100%;
+  right: calc(100% + 4px);
+  left: auto;
+  width: 450px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-search-results[hidden] {
+  display: none;
+}
+
+/* Scrollable list — 4 items tall */
+.nav-search-list {
+  max-height: 336px;
+  /* ~4 items × 84px each */
+  overflow-y: auto;
+}
+
+/* "Search for all" footer — always visible at the bottom */
+.nav-search-all {
+  display: block;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.nav-search-all[hidden] {
+  display: none;
+}
+
+.nav-search-all:hover {
+  background: var(--surface-alt);
+}
+
+.nav-search-item.open .nav-search-toggle {
+  color: var(--gold);
+}
+
+.nav-search-result {
+  display: flex;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  align-items: center;
+}
+
+.nav-search-result:last-child {
+  border-bottom: none;
+}
+
+.nav-search-result:hover {
+  background: var(--surface-alt);
+}
+
+.nav-search-cover {
+  width: 48px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+}
+
+.nav-search-cover-empty {
+  background: var(--surface-alt);
+}
+
+.nav-search-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-search-result .search-title {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-search-result .search-type {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  line-height: 1;
+}
+
+.nav-search-result:hover .search-title {
+  color: var(--gold);
+}
+
+.nav-search-result .search-date {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.nav-search-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Mobile: inline search inside burger menu */
+@media (max-width: 760px) {
+  .nav-search-item {
+    display: block;
+    position: static;
+    padding: 8px 0 12px;
+    z-index: 10;
+  }
+
+  .nav-search-toggle {
+    display: none;
+  }
+
+  .nav-search-input {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    opacity: 1 !important;
+    padding: 10px 14px !important;
+    height: 40px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .nav-search-results {
+    position: static;
+    width: 100%;
+    max-height: 320px;
+    margin-top: 8px;
+    box-shadow: none;
+  }
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-result {
+  display: flex;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  align-items: center;
+}
+
+.search-result:hover {
+  border-color: var(--gold);
+}
+
+.search-result-cover {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+}
+
+.search-result-cover-empty {
+  background: var(--surface-alt);
+}
+
+.search-result-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.search-result-type {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.search-result h3 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.search-result:hover h3 {
+  color: var(--gold);
+}
+
+.search-result-date {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Landscape phones / short screens: use mobile layout */
+@media (max-height: 500px) and (max-width: 1000px) {
+
+  /* ---- Hero: single column ---- */
+  .hero {
+    padding: 24px 0 32px;
+  }
+
+  .hero .container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+
+  .hero .excerpt {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+
+  /* ---- Card grid: 2 columns ---- */
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* ---- Homepage carousels: swipe, no arrows ---- */
+  .content-carousel {
+    gap: 0;
+  }
+
+  .carousel-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .carousel-track>* {
+    flex: 0 0 calc((100% - 28px) / 2);
+    scroll-snap-align: start;
+  }
+
+  .carousel-arrow-left,
+  .carousel-arrow-right {
+    display: none !important;
+  }
+
+  /* ---- Genre chips: swipe, no arrows ---- */
+  .genre-arrow {
+    display: none !important;
+  }
+
+  .chips-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .chips-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    scroll-snap-align: start;
+  }
+
+  /* ---- Review page: single column ---- */
+  .review-grid {
+    grid-template-columns: 1fr;
+    gap: 0 !important;
+    row-gap: 24px !important;
+  }
+
+  .review-body {
+    padding-top: 0 !important;
+    padding-bottom: 32px !important;
+  }
+
+  .review-sidebar {
+    position: relative !important;
+    top: 0 !important;
+    width: auto;
+  }
+
+  .review-sidebar .cover {
+    width: auto;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    margin-top: 32px !important;
+    margin-bottom: 16px !important;
+    display: block !important;
+  }
+
+  .article-text {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  .pros-cons {
+    grid-template-columns: 1fr;
+  }
+
+  /* ---- News rows: stack ---- */
+  .news-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  /* ---- Burger menu (already had this, keeping it) ---- */
+  .nav-toggle {
+    display: block;
+  }
+
+  .main-nav {
+    position: absolute;
+    inset-inline: 0;
+    top: 76px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: none;
+    max-height: calc(100vh - 76px);
+    overflow-y: auto;
+  }
+
+  .main-nav.open {
+    display: block;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 24px 20px;
+  }
+
+  .main-nav li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .main-nav a:not(.nav-search-result) {
+    display: block;
+    padding: 10px 0;
+  }
+
+  /* ---- Search: full width inside menu ---- */
+  .nav-search-item {
+    display: block;
+    position: static;
+    padding: 8px 0 12px;
+    z-index: 10;
+  }
+
+  .nav-search-toggle {
+    display: none;
+  }
+
+  .nav-search-input {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    opacity: 1 !important;
+    padding: 8px 14px !important;
+    height: 36px;
+    display: block;
+    margin-bottom: 8px;
+    border-radius: 4px !important;
+    border: 1px solid var(--border) !important;
+  }
+
+  .nav-search-results {
+    position: static !important;
+    right: auto !important;
+    width: 100% !important;
+    max-height: none;
+    margin-top: 4px;
+    box-shadow: none;
+    border: 1px solid var(--border) !important;
+    border-radius: 4px !important;
+  }
+
+  .nav-search-list {
+    max-height: 160px;
+    overflow-y: auto;
+  }
+
+  .nav-search-result {
+    padding: 8px 12px;
+  }
+
+  .nav-search-cover {
+    width: 36px;
+    height: 48px;
   }
 }

@@ -14,7 +14,9 @@ module.exports = class {
         title: review.data.title || "",
         url: review.url,
         excerpt: review.data.excerpt || "",
-        type: "Review"
+        cover: review.data.cover_image || "",
+        type: "Review",
+        date: review.data.date || ""
       });
     }
 
@@ -23,7 +25,9 @@ module.exports = class {
         title: item.data.title || "",
         url: item.url,
         excerpt: item.data.excerpt || "",
-        type: "News"
+        cover: item.data.cover_image || "",
+        type: "News",
+        date: item.data.date || ""
       });
     }
 
@@ -32,7 +36,9 @@ module.exports = class {
         title: item.data.title || "",
         url: item.url,
         excerpt: item.data.excerpt || "",
-        type: "Article"
+        cover: item.data.cover_image || "",
+        type: "Article",
+        date: item.data.date || ""
       });
     }
 

@@ -11,6 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap"
       rel="stylesheet">
     <link rel="stylesheet" href="{{ baseUrl }}/css/style.css">
+    <link rel="icon" type="image/png" href="{{ baseUrl }}/images/logo.png">
   </head>
   <body>
     <header class="site-header">
@@ -22,7 +23,13 @@
         <nav class="main-nav">
           <ul>
             <li class="nav-search-item">
-              <a href="{{ baseUrl }}/search/" class="nav-search" aria-label="Search" {% if "/search/" in page.url %} aria-current="page" {% endif %}>
+              <input
+                type="text"
+                class="nav-search-input"
+                placeholder="Search reviews, news, articles…"
+                aria-label="Search"
+                autocomplete="off"/>
+              <button type="button" class="nav-search-toggle" aria-label="Open search" aria-expanded="false">
                 <svg
                   width="18"
                   height="18"
@@ -35,7 +42,11 @@
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.35-4.35"></path>
                 </svg>
-              </a>
+              </button>
+              <div class="nav-search-results" hidden>
+                <div class="nav-search-list"></div>
+                <a class="nav-search-all" href="#" hidden>Search for all →</a>
+              </div>
             </li>
             <li>
               <a href="{{ baseUrl }}/" {% if page.url == "{{ baseUrl }}/" %} aria-current="page" {% endif %}>Home</a>
@@ -60,11 +71,10 @@
     <footer class="site-footer">
       <div class="container">
         <p class="about">
-          MGC - Stay updated with us.
+          2026 • MGC - Stay updated with us.
         </p>
         <div class="links">
-          <a href="#">Facebook</a>
-          <a href="#">Youtube</a>
+          <a href="https://www.facebook.com/profile.php?id=61576766526961" target="_blank">Facebook</a>
         </div>
       </div>
     </footer>

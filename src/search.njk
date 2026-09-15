@@ -6,22 +6,8 @@ permalink: "/search.html"
 
 <section class="section" style="border-bottom:none;">
   <div class="container">
-    <h1 style="font-size:2rem; margin-bottom:24px;">Search</h1>
-
-    <div class="search-box">
-      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.35-4.35"></path>
-      </svg>
-      <input
-        type="text"
-        id="search-input"
-        placeholder="Search reviews, news, articles…"
-        autocomplete="off"
-        autofocus
-      />
-    </div>
-
-    <div id="search-results" class="search-results"></div>
+    <h1 style="font-size:2rem; margin-bottom:12px;">Search results</h1>
+    <p id="search-query-display" style="color:var(--text-muted); margin-bottom:32px;"></p>
+    <div id="search-full-results" class="search-results"></div>
   </div>
 </section>
